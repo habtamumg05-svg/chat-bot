@@ -83,8 +83,9 @@
     </style>
   </head>
   <body>
-    <div class="js-container"></div>
 
+    <div class="js-container">
+    </div>
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
@@ -101,7 +102,7 @@
  
          function sendMessage() {
           const newChatMessages = [
-            ...ChatMessages,
+            ...chatMessages,
             {
               message: inputText,
               sender: 'user',
@@ -124,25 +125,27 @@
 
           setInputText('');
         }
-
-          return (
-            <div ClassName="chat-input-container">
-               <input 
-                  placeholder="send a message to chat bot" 
-                  size="30"
-                  onChange={saveInputText}
-                  value={inputText}
-                  ClassName="chat-input"
-               />
-               <button
-                 onClick={sendMessage}
-                 ClassName="send button"
-               >send</button>
-             </div>
-          );
+        
+        return (
+          <div className="chat-input-container">
+             <input 
+                placeholder="send a message to chat bot" 
+                size="30"
+                onChange={saveInputText}
+                value={inputText}
+                className="chat-input"
+             />
+             <button
+               onClick={sendMessage}
+               className="send-button"
+             >send</button>
+           </div>
+        );
+          
         }
        
         function ChatMessage({ message, sender }) {
+          console.log(sender, message)
         // const message = props.message;
         // const sender = props.sender;
         // const { message, sender } = props;
@@ -160,19 +163,19 @@
          */
 
           return (
-           <div ClassName={
+           <div className={
              sender === 'user' 
               ? 'chat-message-user' 
               : 'chat-message-robot'
             }>
               {sender === 'robot' && (
-               <img src="robot.png" ClassName="chat-message-profile" />
+               <img src="robot.png" className="chat-message-profile" />
              )}
-            <div ClassName="chat-message-text">
+            <div className="chat-message-text">
               {message}
             </div>
              {sender === 'user' &&  (
-              <img src="user.png" ClassName="chat-message-profile" />
+              <img src="user.png" className="chat-message-profile" />
              )}
            </div>
           );
@@ -186,17 +189,17 @@
            if (containerElem) {
             containerElem.scrollTop = containerElem.scrollHeight;
            }
-           }, [ChatMessages]);
+           }, [chatMessages]);
 
           return (
-          <div ClassName="chat-message-container"
+          <div className="chat-message-container"
            ref={ChatMessagesRef}>
-              {chatMessages.map((ChatMessage) => {
+              {chatMessages.map((msg) => {
                 return (
                  <ChatMessage
-                   message={ChatMessage.message}
-                   sender={ChatMessage.sender}
-                   key={ChatMessage.id}
+                   message={msg.message}
+                   sender={msg.sender}
+                   key={msg.id}
                  />
                );
              })}   
@@ -209,7 +212,8 @@
             message:'hello chatbot',
             sender:'user',
             id: 'id1'
-         }, {
+         }, 
+         {
             message: 'Hello! How can I help you?',
             sender: 'robot',
             id: 'id2'
@@ -221,13 +225,14 @@
             message: 'Today is september 27',
             sender: 'robot',
             id: 'id4'
-         }]);
+         }
+        ]);
         // const [chatmessages, setChatMessages] = array;
         // const ChatMessages = array[0];
         // const setChatMessages = array[1];
 
        return (
-          <div ClassName="app-container">
+          <div className="app-container">
             <ChatMessages 
               chatMessages={chatMessages}
             />
